@@ -15,6 +15,45 @@
 
 </div>
 
+# Funktionsaufruf / Ausgabe:
+```SQL
+SELECT 
+    e.ENAME                     as "Angestellter"
+  , e.SAL                       as "Lohn"
+  , EMP_FAIRNESS_CHECK(e.empno) as "Fairness-Check"
+    FROM emp e JOIN emp e1 ON (e1.EMPNO = e.EMPNO) 
+      ORDER by e.SAL;
+```      
+
+
+## Emp-Fairness-Check-`FUNCTION`: 
+```SQL
+CREATE or REPLACE 
+                FUNCTION
+                        EMP_FAIRNESS_CHECK ( eNo NUMBER ) 
+RETURN VARCHAR
+IS
+    sol VARCHAR(20)
+  ; diff NUMBER := 0
+  ;
+BEGIN
+  SELECT GET_NEXT_EMP_SAL(GET_SAL_FROM_EMPNO(eNo)) INTO diff;
+    
+    IF diff < 1500 THEN 
+      sol := 'fair';
+    ELSE
+      sol :='unfair';
+    END IF;
+
+    IF GET_SAL_FROM_EMPNO(eNo) = EMP_MAX_SAL THEN
+      sol := 'Bestverdiener';
+    END IF;
+
+  RETURN sol;
+END;
+```
+---
+
 ### Returns sal des Nächst-best-verdienenden Angestellten:
 > ```SQL
 > CREATE or REPLACE 
@@ -42,6 +81,8 @@
 >           RETURN diff;
 > END;   
 > ```
+
+---
 
 ### Returns sal von Employe anhand seiner EmpNo:
 > ```SQL
