@@ -9,7 +9,7 @@
     > *Erst alle ( Hilfs- )*`FUNCTIONS` *kompilieren, dann kann die Ausgabe ausgeführt werden*!  
     </div>
     
-    <img src="img/output.png" alt="output" width=80%>
+    <img src="img/output.png" alt="output" width=100%>
 
   - <p align="left"> Code Snippets: </p>
 
